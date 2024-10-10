@@ -1,20 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RecipeController!{% endblock %}
+{% block title %}section recettes{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
+    <h1>section recettes</h1>
     <ul>
-        <li>Your controller at <code>E:/07_Git/updatesynfony/skeleton/src/Controller/RecipeController.php</code></li>
-        <li>Your template at <code>E:/07_Git/updatesynfony/skeleton/templates/recipe/index.html.twig</code></li>
+        <li>
+            <a href="{{ path('recipe.show', {'slug': 'recette-1', 'id': 1}) }}">recette 1</a>
+        </li>
+        <li>
+            <a href="{{ path('recipe.show', {'slug': 'recette-2', 'id': 2}) }}">recette 2</a>
+        </li>
     </ul>
-</div>
+    
 {% endblock %}
