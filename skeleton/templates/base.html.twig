@@ -14,10 +14,19 @@
     </head>
     <body>
 
-        <nav class="navbar bg-body-tertiary">
-            <div class="container">
-                <a class="navbar-brand" href="{{path("home")}}">Home</a>
-                <a class="navbar-brand" href="{{path("recipe.index")}}">recipe</a>
+        <nav class="navbar bg-primary navbar-expand-lg" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{path('home')}}">Mon super site</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="navbar-link {{ app.current_route == 'home' ? "active" : "" }}" href="{{path("home")}}">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="navbar-link {{ app.current_route starts with "recipe." ? "active" : "" }}" href="{{path("recipe.index")}}">Recette</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
 

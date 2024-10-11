@@ -6,12 +6,11 @@
 
     <h1>section recettes</h1>
     <ul>
-        <li>
-            <a href="{{ path('recipe.show', {'slug': 'recette-1', 'id': 1}) }}">recette 1</a>
-        </li>
-        <li>
-            <a href="{{ path('recipe.show', {'slug': 'recette-2', 'id': 2}) }}">recette 2</a>
-        </li>
+        {% for recipe in recettes %}
+            <li>
+                <a href="{{ path('recipe.show', {'slug': recipe.slug, 'id': recipe.id}) }}">{{ recipe.titre² }}</a>
+            </li>
+        {% endfor %}
     </ul>
     
 {% endblock %}
