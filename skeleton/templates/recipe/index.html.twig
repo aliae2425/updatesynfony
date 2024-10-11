@@ -8,7 +8,7 @@
     <ul>
         {% for recipe in recettes %}
             <li>
-                <a href="{{ path('recipe.show', {'slug': recipe.slug, 'id': recipe.id}) }}">{{ recipe.titre² }}</a>
+                <a href="{{ path('recipe.show', {'slug': recipe.slug, 'id': recipe.id}) }}">{{ recipe.titre }}</a>
             </li>
         {% endfor %}
     </ul>
