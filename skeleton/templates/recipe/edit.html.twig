@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if recette is defined %}
+        Modifier {{recette.titre}}
+    {% else %}
+        Ajouter une recette
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+    {% if recette is defined %}
+        <h1>Modifier {{recette.titre}}</h1>
+    {% else %}
+        <h1>Ajouter une recette</h1>
+    {% endif %}
+
+    {{form(form)}}
+
+
+{% endblock %}
