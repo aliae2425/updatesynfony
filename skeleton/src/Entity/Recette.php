@@ -3,10 +3,17 @@
 namespace App\Entity;
 
 use App\Repository\RecetteRepository;
+use App\Validator\BanWords;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\LessThan;
+use Symfony\Component\Validator\Constraints\Positive;
 
 #[ORM\Entity(repositoryClass: RecetteRepository::class)]
+#[UniqueEntity(fields: ['slug'])]
+#[UniqueEntity(fields: ['titre'])]
 class Recette
 {
     #[ORM\Id]
@@ -15,12 +22,17 @@ class Recette
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min:5)]
+    #[BanWords( )]
     private ?string $titre = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min:3, max:255)]
+    #[Assert\Regex("/^[a-z0-9]+(?:-[a-z0-9]+)*$/")]
     private ?string $slug = null;
 
     #[ORM\Column(type: Types:: TEXT)]
+    #[Assert\Length(min: 10)]
     private ?string $description = null;
 
     #[ORM\Column]
@@ -30,6 +42,8 @@ class Recette
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Positive()]
+    #[LessThan(value:1440)]
     private ?int $duration = null;
 
     public function getId(): ?int
