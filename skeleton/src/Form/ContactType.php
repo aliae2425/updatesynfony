@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\DTO\ContactDTO;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -34,27 +35,28 @@ class ContactType extends AbstractType
                         )
                     ]
                 ]
-             )
+            )
             ->add(
                 'email',
                 TextType::class,
                 [
-                'label' => 'Email',
-                'attr' => [
-                    'placeholder' => 'Votre email',
-                ],
-                "constraints" => [
-                    new Length(
-                        min: 3,
-                        max: 255,
-                        minMessage: "L'email doit contenir au moins 3 caractères",
-                        maxMessage: "L'email doit contenir au plus 255 caractères"
-                    ), 
-                    new Email(
-                        message: "L'email n'est pas valide"
-                    )
+                    'label' => 'Email',
+                    'attr' => [
+                        'placeholder' => 'Votre email',
+                    ],
+                    "constraints" => [
+                            new Length(
+                                min: 3,
+                                max: 255,
+                                minMessage: "L'email doit contenir au moins 3 caractères",
+                                maxMessage: "L'email doit contenir au plus 255 caractères"
+                            ), 
+                            new Email(
+                                message: "L'email n'est pas valide"
+                            )
+                        ]
                 ]
-            ])
+            )
             ->add(
                 'message',
                 TextareaType::class,
@@ -71,6 +73,17 @@ class ContactType extends AbstractType
                     ]
                 ]
             )
+            ->add('destinataire',
+                ChoiceType::class,
+                [
+                    'label' => 'Destinataire',
+                    'choices' => [
+                        'Service commercial' => "contact@com.418.com",
+                        'Service technique' => "contact@tech.418.com",
+                        'Service administratif' => "contact@admin.418.com",
+                        "Service client" => "contact@418.com"
+                        ]
+                ])
             ->add("save", SubmitType::class, ["label" => "Envoyer"])
         ;
     }

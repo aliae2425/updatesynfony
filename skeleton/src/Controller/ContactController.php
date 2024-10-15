@@ -33,7 +33,7 @@ class ContactController extends AbstractController
 
             // test templated mail
             $mail = (New TemplatedEmail())
-                ->to("Contact@418.family")
+                ->to($Contact->destinataire)
                 ->from($Contact->email)
                 ->subject("Nouveau message de " . $Contact->name)
                 ->htmlTemplate('contact/contact.html.twig')
@@ -41,11 +41,15 @@ class ContactController extends AbstractController
             
             //send mail
             
-            $mailer->send($mail);
-
-            $this->addFlash('success', 'Votre message a bien été envoyé');
-            return $this->redirectToRoute('home');
+            try {
+                $mailer->send($mail);
+                $this->addFlash('success', 'Votre message a bien été envoyé');
+                return $this->redirectToRoute('home');
+            } catch (\Exception $e) {
+                $this->addFlash('danger', 'Une erreur est survenue lors de l\'envoi du message');
+            }
         }
+
         return $this->render('contact/index.html.twig', [
             "form" => $form
         ]);
