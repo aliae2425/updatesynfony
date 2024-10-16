@@ -1,0 +1,48 @@
+{% extends 'Admin/admin.html.twig' %}
+
+{% block title %}section recettes{% endblock %}
+
+{% block body %}
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Index des recette</h1>
+        <a href="{{ path('admin.recipe.new') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-download fa-sm text-white-50"></i> Ajouter recette</a>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+
+        <div class="card">
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for recette in recettes %}
+                    <tr>
+                        <td>
+                            <a href="{{ path("admin.recipe.edit", {'id': recette.id}) }}"> {{ recette.titre }}</a>
+                        </td>
+                        <td>
+                            <div class="d-flex gap-5">
+                                <a href="{{ path('admin.recipe.edit', {'id': recette.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                                <form action="{{ path('admin.recipe.delete', {'id': recette.id}) }}" method="post">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+    </div>
+    
+{% endblock %}
