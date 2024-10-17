@@ -15,10 +15,8 @@ use Symfony\Component\Routing\Requirement\Requirement;
 #[Route(path:"/admin/recette", name:"admin.recipe.")]
 class RecipeController extends AbstractController
 {
-
-
     #[Route(path:"/", name:"index")]
-    public function index(Request $request, RecetteRepository $recetteRepository, EntityManagerInterface $em): Response
+    public function index(RecetteRepository $recetteRepository): Response
     {
         return $this->render("admin/recipe/index.html.twig", [
             'recettes' =>  $recetteRepository->findAll()
@@ -55,7 +53,10 @@ class RecipeController extends AbstractController
             return $this->redirectToRoute('admin.recipe.index');
         }
 
-       return $this->render("admin/recipe/edit.html.twig", ["recette" => $recette, "form"=> $form]);
+       return $this->render("admin/recipe/edit.html.twig", [
+        "recette" => $recette,
+         "form"=> $form
+        ]);
     }
 
     #[Route(path:'/{id}/delete', name:'delete', requirements: ["id" => "\d+"], methods: ["DELETE"])]

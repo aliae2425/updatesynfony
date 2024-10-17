@@ -1,0 +1,23 @@
+{% extends 'Admin/admin.html.twig' %}
+
+
+{% block title %}
+    {% if categorie is defined %}
+        Modifier {{categorie.name}}
+    {% else %}
+        Ajouter une categorie
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+    {% if categorie is defined %}
+        <h1>Modifier {{categorie.name}}</h1>
+    {% else %}
+        <h1>Ajouter une categorie</h1>
+    {% endif %}
+
+    {{form(form)}}
+
+
+{% endblock %}
