@@ -16,6 +16,11 @@ use Symfony\Component\Validator\Constraints\Length;
 
 class CategorieType extends AbstractType
 {
+
+    public function __construct(private FormListenerFactory $FormFactory)
+    {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -49,7 +54,7 @@ class CategorieType extends AbstractType
             [
                 "label" => "Enregistrer"
             ])
-            ->addEventListener(FormEvents::PRE_SUBMIT, $this->autoSlug(...))
+            ->addEventListener(FormEvents::PRE_SUBMIT, $this->FormFactory->autoSlug("Name"))
         ;
     }
 
