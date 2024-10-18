@@ -46,6 +46,10 @@ class Recette
     #[LessThan(value:1440)]
     private ?int $duration = null;
 
+    #[ORM\ManyToOne(inversedBy: 'recettes')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Categorie $category = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,6 +123,18 @@ class Recette
     public function setDuration(?int $duration): static
     {
         $this->duration = $duration;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Categorie
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Categorie $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }
