@@ -2,8 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Categorie;
 use App\Entity\Recette;
 use PhpParser\Node\Expr\New_;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Event\PostSubmitEvent;
 use Symfony\Component\Form\Event\PreSubmitEvent;
@@ -29,6 +31,10 @@ class RecipeType extends AbstractType
     {
         $builder
             ->add('titre')
+            ->add('category', EntityType::class, [
+                "class" => Categorie::class,
+                "choice_label" => "Name"
+            ])
             ->add('slug', TextType::class, [
                 "required" => false,
                 "constraints" => new Sequentially([

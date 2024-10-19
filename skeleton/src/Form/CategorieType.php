@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Categorie;
+use App\Entity\Recette;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Event\PreSubmitEvent;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

@@ -29,29 +29,15 @@ class RecetteRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
-    //    /**
-    //     * @return Recette[] Returns an array of Recette objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('r.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Recette
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    /**
+     * @return Recette[] Returns an array of Recette objects
+     */
+    public function findAllWithCategory(): array
+    {
+        return $this->createQueryBuilder("r")
+            ->select("r", "c")
+            ->leftJoin("r.category", "c")
+            ->getQuery()
+            ->getResult();
+    }
 }

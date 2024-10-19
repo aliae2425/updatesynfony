@@ -46,7 +46,7 @@ class Recette
     #[LessThan(value:1440)]
     private ?int $duration = null;
 
-    #[ORM\ManyToOne(inversedBy: 'recettes')]
+    #[ORM\ManyToOne(inversedBy: 'recettes', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: true)]
     private ?Categorie $category = null;
 
