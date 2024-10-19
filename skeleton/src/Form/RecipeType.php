@@ -52,10 +52,6 @@ class RecipeType extends AbstractType
             ->add('duration')
             ->add('thumbnailFile', FileType::class, [
                 "required" => false,
-                "mapped" => false, 
-                "constraints" => [
-                    new Image()
-                ]
             ])
             ->add("save", SubmitType::class,
                 [ "label" => "Enregistrer"])

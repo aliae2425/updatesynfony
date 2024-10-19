@@ -7,13 +7,16 @@ use App\Validator\BanWords;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\LessThan;
 use Symfony\Component\Validator\Constraints\Positive;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: RecetteRepository::class)]
 #[UniqueEntity(fields: ['slug'])]
 #[UniqueEntity(fields: ['titre'])]
+#[Vich\Uploadable()]
 class Recette
 {
     #[ORM\Id]
@@ -52,6 +55,10 @@ class Recette
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $thumbnail = null;
+
+    #[Vich\UploadableField(mapping : "recette", fileNameProperty: "thumbnail")]
+    #[Assert\Image(mimeTypes: ["image/jpeg", "image/png"])]
+    private ?File $thumbnailFile = null;
 
     public function getId(): ?int
     {
@@ -150,6 +157,18 @@ class Recette
     public function setThumbnail(?string $thumbnail): static
     {
         $this->thumbnail = $thumbnail;
+
+        return $this;
+    }
+
+    public function getThumbnailFile(): ?File
+    {
+        return $this->thumbnailFile;
+    }
+
+    public function setThumbnailFile(?File $thumbnailFile): static
+    {
+        $this->thumbnailFile = $thumbnailFile;
 
         return $this;
     }

@@ -24,12 +24,11 @@ class FormListenerFactory
     public function Timestamps(): callable 
     {
         return function (PostSubmitEvent $event){
-            echo "Timestamps";
-                $data = $event->getData();
-                if (! $data->getId()) {
-                    $data->setCreatedAt(new \DateTimeImmutable());
-                }
-                $data->setUpdatedAt(new \DateTimeImmutable());
+            $data = $event->getData();
+            if (! $data->getId()) {
+                $data->setCreatedAt(new \DateTimeImmutable());
+            }
+            $data->setUpdatedAt(new \DateTimeImmutable());
         };
     }
 
