@@ -14,15 +14,6 @@
     </head>
     <body>
 
-        <nav class="navbar navbar-expand navbar-light bg-light">
-            <div class="nav navbar-nav">
-                <a class="nav-item nav-link active" href="{{path('home')}}" aria-current="page"
-                    >Home <span class="visually-hidden">(current)</span></a
-                >
-                <a class="nav-item nav-link {{ app.current_route starts with "recipe." ? "active" : "" }}" href="{{path("recipe.index")}}">Liste des recette</a>
-            </div>
-        </nav>
-        
         <div class="container my-4">
             {% include("partial/flash.html.twig") %}
             {% block body %}{% endblock %}

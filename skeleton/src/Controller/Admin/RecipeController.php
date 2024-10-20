@@ -19,6 +19,7 @@ class RecipeController extends AbstractController
     #[Route(path:"/", name:"index")]
     public function index(RecetteRepository $recetteRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         // dd($recetteRepository->findAll());
         return $this->render("admin/recipe/index.html.twig", [
             'recettes' =>  $recetteRepository->findAllWithCategory()
