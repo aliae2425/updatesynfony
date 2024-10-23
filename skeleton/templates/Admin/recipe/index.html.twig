@@ -20,8 +20,10 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Titre</th>
+                    <th>{{ knp_pagination_sortable(recettes, "ID", 'r.id')}}</th>
+                    <th>{{ knp_pagination_sortable(recettes, "Titre", 'r.titre')}}</th>
                     <th>Categorie</th>
+                    <th>{{knp_pagination_sortable(recettes, "Mise a jour", 'r.updatedAt')}}</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -29,10 +31,16 @@
                 {% for recette in recettes %}
                     <tr>
                         <td>
+                            <a href="{{ path("admin.recipe.edit", {'id': recette.id}) }}"> {{ recette.id }}</a>
+                        </td>
+                        <td>
                             <a href="{{ path("admin.recipe.edit", {'id': recette.id}) }}"> {{ recette.titre }}</a>
                         </td>
                         <td>
                             <p>{{ recette.category.Name |default('') }}</p>
+                        </td>
+                        <td>
+                            <p>{{  recette.updatedAt | date('m/d/Y : h:m:s')}}</p>
                         </td>
                         <td>
                             <div class="d-flex gap-5">
@@ -49,13 +57,7 @@
         </table>
 
         <div class="d-flex justify-content-center">
-            {% if page > 1 %}
-                <a href="{{ path('admin.recipe.index', {'page': page - 1}) }}" class="btn btn-primary">Precedent</a>
-            {% endif %}
-
-            {% if page < maxPage %}
-                <a href="{{ path('admin.recipe.index', {'page': page + 1}) }}" class="btn btn-primary">Suivant</a>
-            {% endif %}
+            {{ knp_pagination_render(recettes) }}
         </div>
 
 

@@ -21,14 +21,11 @@ class RecipeController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
         // dd($recetteRepository->findAll());
         $page = $request->query->get('page', 1);
-        $LIMITE = 2;
-        $recette = $recetteRepository->paginateRecipies($page, $LIMITE);
-        $maxPage = ceil($recette->count() / $recette->getQuery()->getMaxResults());
+        $LIMITE = 1;
+        $recette = $recetteRepository->paginateRecipies($page);
         return $this->render("admin/recipe/index.html.twig", [
             // 'recettes' =>  $recetteRepository->findAllWithCategory()
             'recettes' =>  $recette, 
-            'maxPage' => $maxPage,
-            'page' => $page
         ]);
     }
 

@@ -6,6 +6,7 @@ use App\Entity\Recette;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -13,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RecetteRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginator)
     {
         parent::__construct($registry, Recette::class);
     }
@@ -44,14 +45,25 @@ class RecetteRepository extends ServiceEntityRepository
     }
 
 
-    public function paginateRecipies(int $page = 1, int $limite = 10): Paginator
+    public function paginateRecipies(int $page = 1, int $limite = 10)      
     {
-        return new Paginator($this
-            ->createQueryBuilder("r")
-            ->setMaxResults($limite)
-            ->setFirstResult(($page - 1 )* $limite)
-            ->getQuery()
-            ->setHint(Paginator::HINT_ENABLE_DISTINCT, false)
+        return $this->paginator->paginate(
+            $this->createQueryBuilder("r")
+                ->leftJoin("r.category", "c")
+                ->addSelect("c"),
+            $page,
+            $limite, 
+            [
+                'distinct' => false,
+                'sortFieldAllowList' => ['r.id', 'r.titre', 'r.createdAt', 'r.updatedAt'],
+            ]
         );
+        // return new Paginator($this
+        //     ->createQueryBuilder("r")
+        //     ->setMaxResults($limite)
+        //     ->setFirstResult(($page - 1 )* $limite)
+        //     ->getQuery()
+        //     ->setHint(Paginator::HINT_ENABLE_DISTINCT, false)
+        // );
     }
 }
