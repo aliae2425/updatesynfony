@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -45,7 +46,7 @@ class RecetteRepository extends ServiceEntityRepository
     }
 
 
-    public function paginateRecipies(int $page = 1, int $limite = 10)      
+    public function paginateRecipies(int $page = 1, int $limite = 10): PaginationInterface      
     {
         return $this->paginator->paginate(
             $this->createQueryBuilder("r")

@@ -8,6 +8,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\LessThan;
 use Symfony\Component\Validator\Constraints\Positive;
@@ -22,11 +23,13 @@ class Recette
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['recette.index'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\Length(min:5)]
     #[BanWords( )]
+    #[Groups(['recette.index', 'recette.show'])]
     private ?string $titre = null;
 
     #[ORM\Column(length: 255)]
@@ -36,6 +39,7 @@ class Recette
 
     #[ORM\Column(type: Types:: TEXT)]
     #[Assert\Length(min: 10)]
+    #[Groups(['recette.show'])]
     private ?string $description = null;
 
     #[ORM\Column]
@@ -47,13 +51,16 @@ class Recette
     #[ORM\Column(nullable: true)]
     #[Assert\Positive()]
     #[LessThan(value:1440)]
+    #[Groups(['recette.show'])]
     private ?int $duration = null;
 
     #[ORM\ManyToOne(inversedBy: 'recettes', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: true)]
+    #[Groups(['recette.show'])]
     private ?Categorie $category = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['recette.index', 'recette.show'])]
     private ?string $thumbnail = null;
 
     #[Vich\UploadableField(mapping : "recette", fileNameProperty: "thumbnail")]
