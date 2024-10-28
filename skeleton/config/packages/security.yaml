@@ -17,12 +17,17 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        api:
+        api_token:
             pattern: ^/api
             provider: API_user_provider
             custom_authenticator: App\Controller\API\APIAuthenticator
             stateless: true
             lazy: true
+        api_login:
+            pattern: ^/Auth/token
+            lazy: true
+            provider: app_user_provider
+            custom_authenticator: App\Controller\API\APILoginAuthenticator
         main:
             lazy: true
             provider: app_user_provider

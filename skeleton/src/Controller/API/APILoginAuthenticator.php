@@ -13,8 +13,9 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 
-class APIAuthenticator extends AbstractAuthenticator
+class APILoginAuthenticator extends AbstractAuthenticator
 {
     
     public function __construct(
@@ -25,14 +26,15 @@ class APIAuthenticator extends AbstractAuthenticator
     {
         return
             $request->headers->has('authorization') && 
-                str_contains($request->headers->get('authorization'), 'Bearer ' ) 
+                str_contains($request->headers->get('authorization'), 'Basic ' ) 
             ;    
     }
 
     public function authenticate(Request $request): Passport
     {
-            $token = str_replace('Bearer ', '', $request->headers->get('Authorization'));
-            return new SelfValidatingPassport(new UserBadge($token));
+        $username = $request->headers->get('PHP_AUTH_USER', '');
+        $password = $request->headers->get('PHP_AUTH_PW', '');
+        return new Passport( new  UserBadge($username), new PasswordCredentials($password));
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
